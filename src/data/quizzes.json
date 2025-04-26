@@ -1,0 +1,58 @@
+[
+
+  {
+    "niveau": "Niveau 0",
+    "cours": [
+      {
+        "titre": "Programmation java",
+        "quiz": [
+          {
+            "question": "Qu'est-ce qu'un language php  ?",
+            "options": ["Un type de variable", "Un modèle d'objet", "Un tableau dynamique"],
+            "reponse": "Un modèle d'objet",
+            "audio": "/audio/js_classe.mp3"
+          }
+        ]
+      }
+    ]
+  },
+    {
+      "niveau": "Niveau 1",
+      "cours": [
+        {
+          "titre": "Introduction à JavaScript",
+          "quiz": [
+            {
+              "question": "Que signifie `var` en JavaScript ?",
+              "options": ["Une fonction", "Une variable", "Un tableau"],
+              "reponse": "Une variable",
+              "audio": "/audio/js_intro.mp3"
+            },
+            {
+              "question": "Comment afficher un message dans la console ?",
+              "options": ["console.write()", "console.log()", "print()"],
+              "reponse": "console.log()",
+              "audio": "/audio/js_console.mp3"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "niveau": "Niveau 2",
+      "cours": [
+        {
+          "titre": "Programmation Orientée Objet",
+          "quiz": [
+            {
+              "question": "Qu'est-ce qu'une classe en JavaScript ?",
+              "options": ["Un type de variable", "Un modèle d'objet", "Un tableau dynamique"],
+              "reponse": "Un modèle d'objet",
+              "audio": "/audio/js_classe.mp3"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+  
