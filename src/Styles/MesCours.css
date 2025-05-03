@@ -1,0 +1,49 @@
+/* Animation pour le titre */
+.animate-title {
+    animation: fadeInDown 1s ease-in-out;
+    font-weight: bold;
+  }
+  
+  /* Animation pour les cartes */
+  .animate-card {
+    animation: fadeInUp 0.8s ease-in-out;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+  
+  .animate-card:hover {
+    transform: scale(1.05);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+  }
+  
+  /* Bouton animé */
+  .btn-animate {
+    transition: transform 0.3s ease, background-color 0.3s ease;
+  }
+  
+  .btn-animate:hover {
+    transform: scale(1.1);
+    background-color: #0056b3 !important;
+  }
+  
+  /* Animations */
+  @keyframes fadeInDown {
+    from {
+      opacity: 0;
+      transform: translateY(-20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  
+  @keyframes fadeInUp {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }

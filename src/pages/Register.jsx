@@ -37,8 +37,8 @@ const Register = () => {
     <div className="container mt-5 text-center">
       <h2>📝 Inscription</h2>
       <div className="card p-4 w-50 mx-auto shadow">
-        <input type="text" className="form-control my-2" placeholder="👤 Nom" name="lastName" onChange={handleChange} />
-        <input type="text" className="form-control my-2" placeholder="👤 Prénom" name="firstName" onChange={handleChange} />
+        <input type="text" className="form-control my-2" placeholder="👤 Nom" name="nom" onChange={handleChange} />
+        <input type="text" className="form-control my-2" placeholder="👤 Prénom" name="prenom" onChange={handleChange} />
         <input type="tel" className="form-control my-2" placeholder="📞 Téléphone" name="phone" onChange={handleChange} />
         <select className="form-control my-2" name="region" onChange={handleChange}>
           <option value="">🌍 Sélectionner une région (optionnel)</option>

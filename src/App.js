@@ -19,6 +19,7 @@ import Payments from "./Admin/Payments";
 import Settings from "./Admin/Settings";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
+import CategoryPage from "./pages/CategoryPage";
 
 
 
@@ -35,12 +36,13 @@ function App() {
             <Route path="/services" element={<Services />} />
             <Route path="/contact" element={<Contact />} />
             <Route path="/courses" element={<Courses />} />
-            <Route path="/courses/niveau/:id" element={<CoursePage />} />
+            <Route path="/courses/:category/:niveau" element={<CoursePage />} /> 
             <Route path="/mes-cours" element={<MesCours />} />
             <Route path="/courses/details/:id" element={<CoursNiveau />} />
             <Route path="/quiz/:id" element={<QuizPage />} />
             <Route path="/register" element={<Register />} />
-            <Route path="/login" element={<Login />} />
+            <Route path="/login" element={<Login />} />          
+        <Route path="/categories/:category" element={<CategoryPage />} />
                     <Route path="/admin" element={<Admin />}>
                     k  <Route path="dashboard" element={<Dashboard />} />
                       <Route path="users" element={<Users />} />

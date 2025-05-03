@@ -7,7 +7,7 @@ const Footer = () => {
         <div className="row">
           {/* Logo & Description */}
           <div className="col-md-3">
-            <img src="/image/logo.png" alt="Logo" className="img-fluid mb-2" />
+            <img src="/image/bibocom1.png" alt="Logo" className="img-fluid mb-2" />
             <p>Bibocom</p>
             <p>Bakeli, école de formation professionnelle créée par Volkeno, a formé plus de 6000 étudiants et professionnels aux métiers des nouvelles technologies et du numérique.</p>
           </div>

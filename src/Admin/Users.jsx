@@ -1,38 +1,39 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import axios from "axios";
 
 const Users = () => {
-  const [users, setUsers] = useState([
-    { id: 1, lastName: "Diop", firstName: "Alioune", phone: "+221 77 123 45 67", region: "Dakar" },
-    { id: 2, lastName: "Ba", firstName: "Amina", phone: "+221 76 987 65 43", region: "Thiès" }
-  ]);
-
+  const [users, setUsers] = useState([]);
   const [search, setSearch] = useState("");
   const [showModal, setShowModal] = useState(false);
-  const [newUser, setNewUser] = useState({ lastName: "", firstName: "", phone: "", region: "" });
+  const [newUser, setNewUser] = useState({ nom: "", prenom: "", telephone: "", region: "" });
+
+  useEffect(() => {
+    fetchUsers();
+  }, []);
+
+  const fetchUsers = async () => {
+    try {
+      const response = await axios.get('http://localhost:8000/users/liste');
+      setUsers(response.data.results);
+    } catch (error) {
+      console.error('Erreur lors du chargement des utilisateurs :', error);
+    }
+  };
 
   const handleChange = (e) => {
     setNewUser({ ...newUser, [e.target.name]: e.target.value });
   };
 
-  const handleAddUser = () => {
-    if (newUser.firstName && newUser.lastName && newUser.phone && newUser.region) {
-      setUsers([...users, { ...newUser, id: users.length + 1 }]);
-      setShowModal(false);
-      setNewUser({ lastName: "", firstName: "", phone: "", region: "" });
-    }
-  };
-
-  const handleEdit = (id) => {
-    const selectedUser = users.find(user => user.id === id);
-    if (selectedUser) {
-      setNewUser(selectedUser);
-      setShowModal(true);
-    }
-  };
-
-  const handleDelete = (id) => {
-    if (window.confirm("Voulez-vous vraiment supprimer cet utilisateur ?")) {
-      setUsers(users.filter(user => user.id !== id));
+  const handleAddUser = async () => {
+    if (newUser.prenom && newUser.nom && newUser.telephone && newUser.region) {
+      try {
+        await axios.post('http://localhost:8000/users/ajouter', newUser);
+        setShowModal(false);
+        setNewUser({ nome: "", prenom: "", telephone: "", region: "" });
+        fetchUsers();
+      } catch (error) {
+        console.error('Erreur lors de l\'ajout de l\'utilisateur :', error);
+      }
     }
   };
 
@@ -49,41 +50,74 @@ const Users = () => {
           value={search}
           onChange={(e) => setSearch(e.target.value)}
         />
-        <button className="btn btn-success" onClick={() => setShowModal(true)}>➕ Ajouter un utilisateur</button>
+        <button
+          className="btn btn-success"
+          onClick={() => setShowModal(true)}
+        >
+          ➕ Ajouter un utilisateur
+        </button>
       </div>
 
-      {/* Modal */}
+      {/* Modal d'ajout */}
       {showModal && (
         <div className="modal fade show d-block" tabIndex="-1">
           <div className="modal-dialog">
             <div className="modal-content">
               <div className="modal-header">
-                <h5 className="modal-title">👤 Ajouter / Modifier un utilisateur</h5>
+                <h5 className="modal-title">➕ Ajouter un utilisateur</h5>
                 <button type="button" className="btn-close" onClick={() => setShowModal(false)}></button>
               </div>
               <div className="modal-body">
                 <form>
                   <div className="mb-3">
                     <label className="form-label">Nom</label>
-                    <input type="text" className="form-control" name="lastName" value={newUser.lastName} onChange={handleChange} />
+                    <input
+                      type="text"
+                      className="form-control"
+                      name="nom"
+                      value={newUser.lastName}
+                      onChange={handleChange}
+                    />
                   </div>
                   <div className="mb-3">
                     <label className="form-label">Prénom</label>
-                    <input type="text" className="form-control" name="firstName" value={newUser.firstName} onChange={handleChange} />
+                    <input
+                      type="text"
+                      className="form-control"
+                      name="prenom"
+                      value={newUser.firstName}
+                      onChange={handleChange}
+                    />
                   </div>
                   <div className="mb-3">
                     <label className="form-label">Téléphone</label>
-                    <input type="text" className="form-control" name="phone" value={newUser.phone} onChange={handleChange} />
+                    <input
+                      type="text"
+                      className="form-control"
+                      name="telephone"
+                      value={newUser.phone}
+                      onChange={handleChange}
+                    />
                   </div>
                   <div className="mb-3">
                     <label className="form-label">Région</label>
-                    <input type="text" className="form-control" name="region" value={newUser.region} onChange={handleChange} />
+                    <input
+                      type="text"
+                      className="form-control"
+                      name="region"
+                      value={newUser.region}
+                      onChange={handleChange}
+                    />
                   </div>
                 </form>
               </div>
               <div className="modal-footer">
-                <button className="btn btn-secondary" onClick={() => setShowModal(false)}>Annuler</button>
-                <button className="btn btn-success" onClick={handleAddUser}>✅ Ajouter / Modifier</button>
+                <button className="btn btn-secondary" onClick={() => setShowModal(false)}>
+                  Annuler
+                </button>
+                <button className="btn btn-success" onClick={handleAddUser}>
+                  ✅ Ajouter
+                </button>
               </div>
             </div>
           </div>
@@ -99,22 +133,24 @@ const Users = () => {
               <th>Prénom</th>
               <th>Téléphone</th>
               <th>Région</th>
-              <th>Actions</th>
             </tr>
           </thead>
           <tbody>
-            {users.filter(user => user.firstName.toLowerCase().includes(search.toLowerCase())).map((user) => (
-              <tr key={user.id}>
-                <td>{user.lastName}</td>
-                <td>{user.firstName}</td>
-                <td>{user.phone}</td>
-                <td>{user.region}</td>
-                <td>
-                  <button className="btn btn-warning btn-sm me-2" onClick={() => handleEdit(user.id)}>✏️ Modifier</button>
-                  <button className="btn btn-danger btn-sm" onClick={() => handleDelete(user.id)}>🗑️ Supprimer</button>
-                </td>
-              </tr>
-            ))}
+            {users
+              .filter(user =>
+                user.prenom.toLowerCase().includes(search.toLowerCase()) ||
+                user.nom.toLowerCase().includes(search.toLowerCase()) ||
+                user.telephone.includes(search) ||
+                user.region.toLowerCase().includes(search.toLowerCase())
+              )
+              .map((user) => (
+                <tr key={user.id}>
+                  <td>{user.nom}</td>
+                  <td>{user.prenom}</td>
+                  <td>{user.telephone}</td>
+                  <td>{user.region}</td>
+                </tr>
+              ))}
           </tbody>
         </table>
       </div>

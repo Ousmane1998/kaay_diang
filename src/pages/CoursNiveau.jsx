@@ -1,96 +1,130 @@
 import { useParams, useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
+import "../Styles/CoursNiveau.css"; // Ajoutez un fichier CSS pour les styles et animations
 
-const allCourses = [
-  { level: 0, title: "Cours Niveau 0", description: "Les premiers pas en lecture", videos: ["angular.mp4"] },
-  { level: 1, title: "Cours Niveau 1", description: "Approfondir la compréhension", videos: ["nodeJs.mp4"] },
-  { level: 2, title: "Cours Niveau 2", description: "Lecture avancée et interprétation", videos: ["php.mp4"] },
-];
+const allCourses = {
+  francais: [
+    { level: 0, title: "Cours Niveau 0 (Francais)", description: "Les premiers pas en lecture", videos: ["angular.mp4", "nodeJs.mp4", "php.mp4"] },
+    { level: 1, title: "Cours Niveau 1 (Francais)", description: "Approfondir la compréhension", videos: ["nodeJs.mp4", "php.mp4"] },
+    { level: 2, title: "Cours Niveau 2 (Francais)", description: "Lecture avancée et interprétation", videos: ["php.mp4"] },
+  ],
+  wolof: [
+    { level: 0, title: "Cours Niveau 0 (Wolof)", description: "Les premiers pas en lecture", videos: ["angular.mp4", "php.mp4", "nodeJs.mp4"] },
+    { level: 1, title: "Cours Niveau 1 (Wolof)", description: "Approfondir la compréhension", videos: ["php.mp4", "angular.mp4"] },
+    { level: 2, title: "Cours Niveau 2 (Wolof)", description: "Lecture avancée et interprétation", videos: ["nodeJs.mp4"] },
+  ],
+};
 
 const CoursNiveau = () => {
-  const { id } = useParams();
+  const { category, id } = useParams(); // Récupère la catégorie et le niveau depuis l'URL
   const level = Number(id);
   const navigate = useNavigate();
   const [courses, setCourses] = useState([]);
+  const [progress, setProgress] = useState({}); // Stocke la progression des vidéos et tests
 
   useEffect(() => {
-    const unlockedLevels = JSON.parse(localStorage.getItem("unlockedLevels")) || [0];
+    const unlockedLevels = JSON.parse(localStorage.getItem(`unlockedLevels-${category}`)) || [0]; // Seul le niveau 0 est débloqué par défaut
+    const savedProgress = JSON.parse(localStorage.getItem(`progress-${category}`)) || {};
+    setProgress(savedProgress);
 
-    if (!unlockedLevels.includes(0)) {
-      unlockedLevels.push(0);
-      localStorage.setItem("unlockedLevels", JSON.stringify(unlockedLevels));
-    }
+    setCourses(
+      allCourses[category]?.map((course) => ({
+        ...course,
+        unlocked: unlockedLevels.includes(course.level),
+      })) || []
+    );
+  }, [category, level]);
 
-    const quizScores = JSON.parse(localStorage.getItem("quizScores")) || {};
-    const previousLevel = level - 1;
-    const previousQuizzes = allCourses.find(c => c.level === previousLevel)?.quiz || [];
-
-    const allPreviousTestsPassed = previousQuizzes.every(q => {
-      const score = quizScores[previousLevel] || 0;
-      return score === q.length;
-    });
-
-    setCourses(allCourses.map((course) => ({
-      ...course,
-      unlocked: unlockedLevels.includes(course.level) && (course.level === 0 || allPreviousTestsPassed),
-    })));
-  }, []);
-
-  const unlockedLevels = JSON.parse(localStorage.getItem("unlockedLevels")) || [0];
-  const progressPercentage = (unlockedLevels.length / allCourses.length) * 100;
-
+  if (!allCourses[category]) {
+    return <h2 className="text-center mt-4 text-danger">Erreur : Catégorie introuvable</h2>;
+  }
+  
   const course = courses.find((c) => c.level === level);
-
+  
   if (!course) {
     return <h2 className="text-center mt-4 text-danger">Erreur : Niveau introuvable</h2>;
   }
 
+  // Fonction pour marquer une vidéo comme terminée
+  const markVideoAsCompleted = (videoIndex) => {
+    const updatedProgress = { ...progress };
+    if (!updatedProgress[level]) {
+      updatedProgress[level] = {};
+    }
+    updatedProgress[level][videoIndex] = true;
+    setProgress(updatedProgress);
+    localStorage.setItem(`progress-${category}`, JSON.stringify(updatedProgress));
+
+    // Débloquer la vidéo suivante si elle existe
+    if (videoIndex + 1 < course.videos.length) {
+      updatedProgress[level][videoIndex + 1] = false;
+    } else {
+      // Si toutes les vidéos du niveau sont terminées, débloquer le niveau suivant
+      const unlockedLevels = JSON.parse(localStorage.getItem(`unlockedLevels-${category}`)) || [];
+      if (!unlockedLevels.includes(level + 1)) {
+        unlockedLevels.push(level + 1);
+        localStorage.setItem(`unlockedLevels-${category}`, JSON.stringify(unlockedLevels));
+      }
+    }
+  };
+
+  // Fonction pour gérer le clic sur "Faire le test"
+  const handleTestClick = (videoIndex) => {
+    const audio = new Audio("/audio/test-sound.mp3");
+    audio.play();
+
+    // Simuler la réussite du test
+    setTimeout(() => {
+      alert("Test réussi !");
+      markVideoAsCompleted(videoIndex);
+    }, 1000);
+  };
+
   return (
-    <div className="container text-center">
-      <h2 className="mt-4"><strong>{course.title}</strong></h2>
-      <p className="text-danger fs-5">{course.description}</p>
+    <div className="container mt-5">
+      {/* Titre et description */}
+      <h2 className="text-center animate-title">{course.title}</h2>
+      <p className="text-center text-muted">{course.description}</p>
 
-      <div className="progress mt-3" style={{ height: "40px", borderRadius: "10px" }}>
-  <div 
-    className="progress-bar bg-warning text-dark fw-bold" 
-    role="progressbar" 
-    style={{ 
-      width: `${progressPercentage}%`, 
-      fontSize: "10px", 
-      textAlign: "center",
-      display: "flex", 
-      alignItems: "center", 
-      justifyContent: "center"
-    }}
-  >
-    {Math.round(progressPercentage)}% Progression
-  </div>
-</div>
-
-
-      {/* Vidéo verrouillée si le test précédent n'est pas validé */}
-      <div className={`course-card ${course.unlocked ? "unlocked-course" : ""}`}>
-        <video className="w-100" controls={course.unlocked} style={{ opacity: course.unlocked ? 1 : 0.5 }}>
-          <source src={`/image/${course.videos[0]}`} type="video/mp4" />
-        </video>
-        {!course.unlocked && <p className="text-danger mt-2">🔒 Vous devez obtenir 5/5 au quiz précédent pour débloquer cette vidéo.</p>}
-      </div>
-
-      {/* Bouton du quiz */}
-      <h3 className="mt-3"><strong>QUIZ</strong></h3>
-      <button
-        className={`btn quiz-button mt-3 ${course.unlocked ? "btn-danger" : "btn-secondary disabled"}`}
-        onClick={() => course.unlocked && navigate(`/quiz/${level}`)}
-      >
-        {course.unlocked ? "Faire le test" : "🔒 Test verrouillé"}
-      </button>
-
-      {/* Audio explicatif */}
-      <div className="mt-3">
-        <p><strong>Écoutez l'explication :</strong></p>
-        <audio controls>
-          <source src="/audio/explication.mp3" type="audio/mp3" />
-        </audio>
+      {/* Liste des vidéos */}
+      <div className="row mt-4">
+        {course.videos.map((video, index) => {
+          const isUnlocked =
+            (level === 0 && index === 0) || // La première vidéo du niveau 0 est toujours débloquée
+            (progress[level]?.[index] || (index === 0 && progress[level - 1]?.[allCourses[category][level - 1]?.videos.length - 1])); // Déblocage progressif
+          return (
+            <div className="col-md-4 mb-4" key={index}>
+              <div className={`card shadow-sm animate-card ${isUnlocked ? "" : "locked-card"}`}>
+                <video
+                  className="w-100 rounded"
+                  controls={isUnlocked}
+                  style={{ opacity: isUnlocked ? 1 : 0.5 }}
+                  onEnded={() => markVideoAsCompleted(index)}
+                >
+                  <source src={`/image/${video}`} type="video/mp4" />
+                </video>
+                <div className="card-body text-center">
+                  <h5 className="card-title">Cours {index + 1}</h5>
+                  <p className="card-text">{isUnlocked ? "Vidéo disponible" : "🔒 Vidéo verrouillée"}</p>
+                  <div className="d-flex justify-content-center align-items-center">
+                    <button
+                      className={`btn quiz-button me-2 ${isUnlocked ? "btn-primary" : "btn-secondary disabled"}`}
+                      onClick={() => isUnlocked && handleTestClick(index)}
+                    >
+                      {isUnlocked ? "Faire le test" : "🔒 Test verrouillé"}
+                    </button>
+                    <button
+                      className="btn btn-audio"
+                      onClick={() => new Audio(`/audio/${category}-audio-${index + 1}.mp3`).play()}
+                    >
+                      🎵 Écouter
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          );
+        })}
       </div>
     </div>
   );

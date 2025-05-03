@@ -4,9 +4,7 @@ const TopBar = ({ search, setSearch, handleLogout }) => {
   return (
     <div className="container d-flex justify-content-between align-items-center p-3 bg-white shadow"
     style={{ position: "fixed", top: "0", left: "50%", transform: "translateX(-50%)", zIndex: "1000" }}
->
-
-      
+>   
       {/* Barre de recherche avec icône */}
       <div className="d-flex align-items-center bg-light rounded p-2" style={{ width: "50%" }}>
         <i className="bi bi-search text-muted mx-2"></i>

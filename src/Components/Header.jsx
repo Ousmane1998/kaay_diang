@@ -27,7 +27,9 @@ const Header = () => {
       {isLoggedIn ? (
   <button className="btn btn-danger" onClick={handleLogout}>🚪 Déconnexion</button>
 ) : (
-  <a href="/login" className="btn btn-success">🔑 Se connecter</a>
+  <a href="/login" className="btn btn-success" style={{ backgroundColor: "#0048A0", borderColor: "#0048A0" }}>
+  🔑 Se connecter
+</a>
 )}
 
     

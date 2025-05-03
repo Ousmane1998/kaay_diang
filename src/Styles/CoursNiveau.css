@@ -1,0 +1,73 @@
+/* Animation pour le titre */
+.animate-title {
+  animation: fadeInDown 1s ease-in-out;
+  font-weight: bold;
+  color: #007bff;
+}
+
+/* Animation pour les cartes */
+.animate-card {
+  animation: fadeInUp 0.8s ease-in-out;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.animate-card:hover {
+  transform: scale(1.05);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+}
+
+/* Carte verrouillée */
+.locked-card {
+  background-color: #f8d7da;
+  border-color: #f5c6cb;
+}
+
+.locked-card:hover {
+  transform: none;
+  box-shadow: none;
+}
+
+/* Bouton du quiz */
+.quiz-button {
+  transition: transform 0.3s ease, background-color 0.3s ease;
+}
+
+.quiz-button:hover {
+  transform: scale(1.1);
+}
+
+/* Bouton audio */
+.btn-audio {
+  background-color: #ffc107;
+  color: #fff;
+  border: none;
+  transition: transform 0.3s ease, background-color 0.3s ease;
+}
+
+.btn-audio:hover {
+  transform: scale(1.1);
+  background-color: #e0a800;
+}
+
+/* Animations */
+@keyframes fadeInDown {
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
