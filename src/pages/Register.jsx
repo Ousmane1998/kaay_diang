@@ -4,9 +4,9 @@ import { useNavigate } from "react-router-dom";
 
 const Register = () => {
   const [user, setUser] = useState({
-    firstName: "",
-    lastName: "",
-    phone: "",
+    prenom: "",
+    nom: "",
+    telephone: "",
     region: "",
     password: "",
     confirmPassword: "",
@@ -39,7 +39,7 @@ const Register = () => {
       <div className="card p-4 w-50 mx-auto shadow">
         <input type="text" className="form-control my-2" placeholder="👤 Nom" name="nom" onChange={handleChange} />
         <input type="text" className="form-control my-2" placeholder="👤 Prénom" name="prenom" onChange={handleChange} />
-        <input type="tel" className="form-control my-2" placeholder="📞 Téléphone" name="phone" onChange={handleChange} />
+        <input type="tel" className="form-control my-2" placeholder="📞 Téléphone" name="telephone" onChange={handleChange} />
         <select className="form-control my-2" name="region" onChange={handleChange}>
           <option value="">🌍 Sélectionner une région (optionnel)</option>
           <option value="Dakar">Dakar</option>
