@@ -44,11 +44,11 @@ const MesCours = () => {
                 <h4 className="card-title">{course.title}</h4>
                 <p className="card-text">Accédez à vos cours pour ce niveau.</p>
                 <Link
-                  to={`/courses/${course.title.toLowerCase().includes("francais") ? "francais" : "wolof"}/${course.level.toLowerCase().replace(" ", "-")}`}
-                  className="btn btn-success btn-animate"
-                >
-                  Voir les cours
-                </Link>
+  to={`/courses/${course.title.toLowerCase().includes("francais") ? "francais" : "wolof"}/${course.level}`}
+  className="btn btn-success btn-animate"
+>
+  Voir les cours
+</Link> 
               </div>
             </div>
           </div>

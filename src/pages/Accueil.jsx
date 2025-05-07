@@ -2,7 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 
 const Accueil = () => {
-  const categories = ["Francais", "Wolof"];
+  const categories = ["francais", "wolof"];
 
   return (
     <>
@@ -53,10 +53,10 @@ const Accueil = () => {
             <div className="col-md-6" key={i}>
               <Link to={`/categories/${categorie.toLowerCase()}`} className="text-decoration-none">
                 <div
-                  className={`card text-center p-3 ${categorie === "Francais" ? "bg-primary text-white" : ""}`}
+                  className={`card text-center p-3 ${categorie === "francais" ? "bg-primary text-white" : ""}`}
                   style={{
-                    backgroundColor: categorie === "Wolof" ? "#D71920" : "",
-                    color: categorie === "Wolof" ? "#fff" : "",
+                    backgroundColor: categorie === "wolof" ? "#D71920" : "",
+                    color: categorie === "wolof" ? "#fff" : "",
                   }}
                 >
                 {categorie}

@@ -54,7 +54,7 @@ const CategoryPage = () => {
                   </span>
                   {isUnlocked ? (
                     <Link
-                      to={`/courses/${category}/${niveau.toLowerCase().replace(" ", "-")}`}
+                    to={`/courses/${category}/${niveau}`}
                       className="btn btn-success btn-sm"
                     >
                       Accéder
