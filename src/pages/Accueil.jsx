@@ -1,5 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import { motion } from "framer-motion";
 
 const Accueil = () => {
   const categories = ["francais", "wolof"];
@@ -8,33 +9,96 @@ const Accueil = () => {
     <>
       <main className="col-md-9 col-lg-10 content" style={{ paddingTop: "70px" }}>
         {/* Section d'introduction */}
-        <div className="le_tete bg-dark vh-100 d-block text-light text-center">
-          <h2 className="fw-bold">BIENVENUE <br />Cher Apprenant dans Diangue Dou Weiss</h2>
+        <motion.div
+          className="le_tete bg-dark vh-100 d-block text-light text-center"
+          initial={{ opacity: 0, y: -50 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 1 }}
+        >
+          <h2 className="fw-bold">
+            BIENVENUE <br />
+            Cher Apprenant dans Diangue Dou Weiss
+          </h2>
           <h4>
-            Nous sommes ravis de te voir parmi nous pour apprendre et grandir ensemble.<br />
+            Nous sommes ravis de te voir parmi nous pour apprendre et grandir ensemble.
+            <br />
             Prépare-toi à explorer de nouvelles compétences et découvrir un monde d'opportunité !
           </h4>
-        </div>
-
-        {/* Qui sommes-nous */}
-        <h3 className="text-center">Qui sommes-nous ?</h3>
+        </motion.div>
+        <motion.h3
+          className="text-center"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 0.5, duration: 1 }}
+        >
+          Qui sommes-nous ?
+        </motion.h3>
         <div className="row text-center">
-          <div className="col-md-6"><audio controls><source src="/image/video.mp3" type="audio/mpeg" /></audio></div>
-          <div className="col-md-6"><audio controls><source src="/image/video.mp3" type="audio/mpeg" /></audio></div>
+          <motion.div
+            className="col-md-6"
+            initial={{ opacity: 0, x: -50 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ delay: 0.7, duration: 1 }}
+          >
+            <audio controls>
+              <source src="/image/video.mp3" type="audio/mpeg" />
+            </audio>
+          </motion.div>
+          <motion.div
+            className="col-md-6"
+            initial={{ opacity: 0, x: 50 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ delay: 0.7, duration: 1 }}
+          >
+            <audio controls>
+              <source src="/image/video.mp3" type="audio/mpeg" />
+            </audio>
+          </motion.div>
         </div>
 
         {/* Section vidéos */}
-        <h3 className="text-center mt-4">Nos vidéos</h3>
+        <motion.h3
+          className="text-center mt-4"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 1, duration: 1 }}
+        >
+          Nos vidéos
+        </motion.h3>
         <div className="row">
-          <div className="col-md-4"><video controls className="w-100"><source src="/image/angular.mp4" type="video/mp4" /></video></div>
-          <div className="col-md-4"><video controls className="w-100"><source src="/image/nodeJs.mp4" type="video/mp4" /></video></div>
-          <div className="col-md-4"><video controls className="w-100"><source src="/image/php.mp4" type="video/mp4" /></video></div>
+          {["angular.mp4", "nodeJs.mp4", "php.mp4"].map((video, index) => (
+            <motion.div
+              className="col-md-4"
+              key={index}
+              initial={{ opacity: 0, scale: 0.8 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ delay: 1.2 + index * 0.2, duration: 0.8 }}
+            >
+              <video controls className="w-100">
+                <source src={`/image/${video}`} type="video/mp4" />
+              </video>
+            </motion.div>
+          ))}
         </div>
 
-        <h3 className="text-center mt-4">Témoignages</h3>
+        {/* Témoignages */}
+        <motion.h3
+          className="text-center mt-4"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 1.5, duration: 1 }}
+        >
+          Témoignages
+        </motion.h3>
         <div className="row text-center">
           {[...Array(3)].map((_, i) => (
-            <div className="col-md-4" key={i}>
+            <motion.div
+              className="col-md-4"
+              key={i}
+              initial={{ opacity: 0, y: 50 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 1.7 + i * 0.2, duration: 0.8 }}
+            >
               <div className="card">
                 <img className="card-img-top" src="/image/bibocom.jpg" alt="John Doe" />
                 <div className="card-body">
@@ -42,32 +106,52 @@ const Accueil = () => {
                   <p className="card-text">John Doe est un architecte et ingénieur.</p>
                 </div>
               </div>
-            </div>
+            </motion.div>
           ))}
         </div>
 
         {/* Section Catégories */}
-        <h3 className="text-center mt-5">Catégories disponibles</h3>
+        <motion.h3
+          className="text-center mt-5"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 2, duration: 1 }}
+        >
+          Catégories disponibles
+        </motion.h3>
         <div className="row">
           {categories.map((categorie, i) => (
-            <div className="col-md-6" key={i}>
+            <motion.div
+              className="col-md-6"
+              key={i}
+              initial={{ opacity: 0, x: i % 2 === 0 ? -50 : 50 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ delay: 2.2 + i * 0.2, duration: 0.8 }}
+            >
               <Link to={`/categories/${categorie.toLowerCase()}`} className="text-decoration-none">
                 <div
-                  className={`card text-center p-3 ${categorie === "francais" ? "bg-primary text-white" : ""}`}
+                  className={`card text-center p-3 ${
+                    categorie === "francais" ? "bg-primary text-white" : ""
+                  }`}
                   style={{
                     backgroundColor: categorie === "wolof" ? "#D71920" : "",
                     color: categorie === "wolof" ? "#fff" : "",
                   }}
                 >
-                {categorie}
+                  {categorie}
                 </div>
               </Link>
-            </div>
+            </motion.div>
           ))}
         </div>
 
         {/* Carrousel */}
-        <div className="mt-3">
+        <motion.div
+          className="mt-3"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 2.5, duration: 1 }}
+        >
           <h3 className="text-center">Nos Apprenants</h3>
           <div id="demo" className="carousel slide" data-ride="carousel">
             {/* Indicators */}
@@ -92,7 +176,7 @@ const Accueil = () => {
               <span className="carousel-control-next-icon"></span>
             </a>
           </div>
-        </div>
+        </motion.div>
       </main>
     </>
   );
