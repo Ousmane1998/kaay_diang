@@ -1,0 +1,56 @@
+  * {
+          width: 100%;
+          padding: 0;
+          margin: 0;
+          box-sizing: border-box;
+        }
+        
+        .content {
+            position: absolute;
+            right: 0;
+
+        }
+        .le_tete {
+          background-image: url('../assets/image/dev.jpg');
+          background-position: center;
+          background-size: cover;
+          background-position: center;
+          color: white;
+          padding: 30px 20px;
+        }
+        .footer {
+            margin-left: 200px;
+        }
+        @media (max-width: 768px) {
+            .sidebar {
+                position: relative;
+                height: auto;
+            }
+            .content {
+                margin-left: 0;
+            }
+        }
+
+        footer {
+        background-color: #1e2530;
+        width: 100%;
+        }
+        .footer-top {
+            background-color: #ff7f27;
+        }
+        .footer-bottom {
+            background-color: #1e2530;
+        }
+        footer a {
+            color: #bbb;
+            text-decoration: none;
+        }
+        footer a:hover {
+            color: #fff;
+        }
+
+        .dropdown {
+          width: 150px;
+          position: absolute;
+          right: 0;
+        }

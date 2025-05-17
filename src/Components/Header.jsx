@@ -13,13 +13,14 @@ const Header = () => {
     setIsLoggedIn(false);
   };
   return (
-    <div className="d-flex flex-column bg-dark text-white p-3 vh-100 position-fixed top-0 start-0" style={{ width: "220px" }}>
+    <div className=" text-center bg-primary text-white p-3 vh-100 position-fixed top-0 start-0" style={{ width: "220px" }}>
 
-<img src="/image/bibocom1.png" alt="Bibocom Digital" className="img-fluid mb-3" />
+      <img src="/image/bibocom1.png" alt="Bibocom Digital" className="img-fluid mb-3" />
       <ul className="list-unstyled">
-        <li className="mb-3"><Link to="/" className="text-white" ><i class="bi bi-house"></i> Accueil</Link></li>
-        <li className="mb-3"><Link to="/mes-cours" className="text-white">📚 Mes cours</Link></li>
-        <li className="mb-3"><Link to="/contact" className="text-white">📞 Contact</Link></li>
+        <li className="mb-3"><Link to="/" className="text-white text-decoration-none" ><i className="bi bi-house"></i>  Accueil</Link></li>
+        <li className="mb-3"><Link to="/mes-cours" className="text-white text-decoration-none"><i className="bi bi-postcard"></i> Mes cours</Link></li>
+        <li className="mb-3"><Link to="/actualite" className="text-white text-decoration-none"><i className="bi bi-person"></i> Actualité</Link></li>
+        <li className="mb-3"><Link to="/contact" className="text-white text-decoration-none"><i className="bi bi-telephone"></i> Contact</Link></li>
       </ul>
       
 
